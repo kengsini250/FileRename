@@ -6,6 +6,7 @@
 
 #include "widget.h"
 #include "ui_Widget.h"
+#include "mylistwidget.h"
 #include <QRandomGenerator>
 #include <QMimeData>
 #include <QList>
@@ -17,6 +18,7 @@ Widget::Widget(QWidget *parent) :
     setAcceptDrops(true);
 
     InitFormat();
+    myListWidget = new MyListWidget(ui->frame);
 
     //update
     //FileName
@@ -89,6 +91,10 @@ Widget::Widget(QWidget *parent) :
         QFile file(currFilePathWithName);
         file.rename(currFilePath + "/" +ui->lineEdit->text());
     });
+
+
+
+
 }
 
 Widget::~Widget() {
@@ -127,7 +133,6 @@ void Widget::dropEvent(QDropEvent *event) {
     if(urls.empty()){
         return;
     }
-
     for(auto & url : urls){
         currFilePathWithName = url.toLocalFile();
         int pos = currFilePathWithName.lastIndexOf(QChar('/'));
@@ -135,7 +140,6 @@ void Widget::dropEvent(QDropEvent *event) {
         currFileName = currFilePathWithName.mid(pos+1,currFilePathWithName.size()-pos);
         ui->lineEdit_Display->setText(currFileName);
     }
-
     QWidget::dropEvent(event);
 }
 
@@ -144,4 +148,5 @@ void Widget::dragEnterEvent(QDragEnterEvent *event) {
         event->acceptProposedAction();
     else
         event->ignore();
+    QWidget::dragEnterEvent(event);
 }

@@ -8,10 +8,11 @@
 #include <QDebug>
 #include <QWidget>
 #include <QTimer>
-#include <QDropEvent>
-#include <QDragEnterEvent>
 #include <QFile>
 #include <QFileInfo>
+#include <QDropEvent>
+#include <QDragEnterEvent>
+#include "mylistwidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -33,6 +34,8 @@ private:
     QTimer *timer;
     QMap<int,QString> All;
     QString currFileName,currFilePathWithName,currFilePath;
+
+    MyListWidget* myListWidget;
 
 protected:
     void dropEvent(QDropEvent *event)override;

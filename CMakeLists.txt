@@ -19,7 +19,7 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(FileRename main.cpp widget.cpp widget.h widget.ui)
+add_executable(FileRename main.cpp widget.cpp widget.h widget.ui mylistwidget.cpp mylistwidget.h mylistwidget.ui)
 target_link_libraries(FileRename
         Qt::Core
         Qt::Gui

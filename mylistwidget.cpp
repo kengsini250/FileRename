@@ -90,3 +90,11 @@ void MyListWidget::Preview(const QModelIndex &index) {
     picWidget->show();
 }
 
+void MyListWidget::updateListWidget(const ListWidgetFormat& f) {
+    files[currFilePos] = f;
+    clear();
+    for(auto&file:files){
+        addItem(file.currFileName);
+    }
+}
+

@@ -29,6 +29,7 @@ public:
     ~MyListWidget() override;
 
     void addFiles(const ListWidgetFormat& f);
+    void updateListWidget(const ListWidgetFormat& f);
 
     Q_SIGNALS: void currFileSendToMain(const ListWidgetFormat& f);
 public slots:

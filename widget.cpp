@@ -88,8 +88,11 @@ Widget::Widget(QWidget *parent) :
     //rename
     connect(ui->pushButton_Rename,&QPushButton::clicked,this,[this]{
         if(currFileName == "" || currFilePathWithName == "") return;
+        currFileName = ui->lineEdit->text();
         QFile file(currFilePathWithName);
-        file.rename(currFilePath + "/" +ui->lineEdit->text());
+        file.rename(currFilePath + "/" +currFileName);
+        //update list widget
+        myListWidget->updateListWidget({currFileName,currFilePath,currFilePathWithName});
     });
 
     //get from listwidget

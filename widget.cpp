@@ -92,8 +92,13 @@ Widget::Widget(QWidget *parent) :
         file.rename(currFilePath + "/" +ui->lineEdit->text());
     });
 
-
-
+    //get from listwidget
+    connect(myListWidget,&MyListWidget::currFileSendToMain,this,[this](const ListWidgetFormat& f){
+        currFilePathWithName = f.currFilePathWithName;
+        currFilePath = f.currFilePath;
+        currFileName = f.currFileName;
+        ui->lineEdit_Display->setText(currFileName);
+    });
 
 }
 
@@ -139,7 +144,13 @@ void Widget::dropEvent(QDropEvent *event) {
         currFilePath = currFilePathWithName.left(pos);
         currFileName = currFilePathWithName.mid(pos+1,currFilePathWithName.size()-pos);
         ui->lineEdit_Display->setText(currFileName);
+
+        //send to listwidget
+        myListWidget->addFiles({currFileName,currFilePath,currFilePathWithName});
     }
+    //send end
+    myListWidget->addFiles({"","",""});
+
     QWidget::dropEvent(event);
 }
 

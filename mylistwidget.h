@@ -6,8 +6,16 @@
 #define FILERENAME_MYLISTWIDGET_H
 
 #include <QListWidget>
+#include <QString>
+#include <QMap>
 
-
+//QListWidgeItem
+struct ListWidgetFormat
+{
+    QString currFileName;
+    QString currFilePath;
+    QString currFilePathWithName;
+};
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MyListWidget; }
@@ -18,12 +26,15 @@ Q_OBJECT
 
 public:
     explicit MyListWidget(QWidget *parent = nullptr);
-
     ~MyListWidget() override;
 
+    void addFiles(const ListWidgetFormat& f);
+
+    signals:
+    void currFileSendToMain(const ListWidgetFormat& f);
 private:
     Ui::MyListWidget *ui;
-
+    QList<ListWidgetFormat> files;
 };
 
 

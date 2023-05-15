@@ -33,6 +33,12 @@ private:
     Ui::Widget *ui;
     QTimer *timer;
     QMap<int,QString> All;
+
+    /*
+     * QString currFileName,//xxx.jpg
+     * currFilePathWithName,// /aaa/bbb/ccc/xxx.jpg
+     * currFilePath;// /aaa/bbb/ccc
+     */
     QString currFileName,currFilePathWithName,currFilePath;
 
     MyListWidget* myListWidget;

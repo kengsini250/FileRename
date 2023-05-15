@@ -30,11 +30,11 @@ public:
 
     void addFiles(const ListWidgetFormat& f);
 
-    signals:
-    void currFileSendToMain(const ListWidgetFormat& f);
+    Q_SIGNALS: void currFileSendToMain(const ListWidgetFormat& f);
 private:
     Ui::MyListWidget *ui;
     QList<ListWidgetFormat> files;
+    int currFilePos=0;
 };
 
 

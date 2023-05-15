@@ -123,7 +123,7 @@ QString Widget::GetFileNameFromFormat() {
         FileName+=p.value();
         FileName+="_";
     }
-    int pos = FileName.lastIndexOf(QChar('_'));
+    qsizetype pos = FileName.lastIndexOf(QChar('_'));
     FileName = FileName.left(pos);
 
     return FileName + ui->comboBox->currentText();
@@ -140,12 +140,12 @@ void Widget::dropEvent(QDropEvent *event) {
     }
     for(auto & url : urls){
         currFilePathWithName = url.toLocalFile();
-        int pos = currFilePathWithName.lastIndexOf(QChar('/'));
+        qsizetype pos = currFilePathWithName.lastIndexOf(QChar('/'));
         currFilePath = currFilePathWithName.left(pos);
         currFileName = currFilePathWithName.mid(pos+1,currFilePathWithName.size()-pos);
         ui->lineEdit_Display->setText(currFileName);
 
-        //send to listwidget
+        //send to list widget
         myListWidget->addFiles({currFileName,currFilePath,currFilePathWithName});
     }
     //send end

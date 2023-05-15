@@ -31,6 +31,9 @@ public:
     void addFiles(const ListWidgetFormat& f);
 
     Q_SIGNALS: void currFileSendToMain(const ListWidgetFormat& f);
+public slots:
+    //预览
+    void Preview(const QModelIndex& index);
 private:
     Ui::MyListWidget *ui;
     QList<ListWidgetFormat> files;

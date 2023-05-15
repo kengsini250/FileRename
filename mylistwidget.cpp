@@ -7,6 +7,8 @@
 #include "mylistwidget.h"
 #include "ui_MyListWidget.h"
 #include <QMenu>
+#include <QLabel>
+#include <QFileInfo>
 
 MyListWidget::MyListWidget(QWidget *parent) :
         QListWidget(parent), ui(new Ui::MyListWidget) {
@@ -28,14 +30,14 @@ MyListWidget::MyListWidget(QWidget *parent) :
         menu->exec(QCursor::pos());
     });
 
+    //改名
     connect(this,&QListWidget::clicked,this,[this](const QModelIndex& index){
-        currFilePos = index.row();
-    });
-
-    connect(this,&QListWidget::doubleClicked,this,[this](const QModelIndex& index){
         currFilePos = index.row();
         Q_EMIT currFileSendToMain(files[currFilePos]);
     });
+
+    //预览
+    connect(this,&QListWidget::doubleClicked,this,&MyListWidget::Preview);
 
 }
 
@@ -47,11 +49,44 @@ void MyListWidget::addFiles(const ListWidgetFormat& f)
 {
     if(f.currFileName == "" && f.currFilePath == "" && f.currFilePathWithName == ""){
         //end -> update list widget
+        clear();
         for(auto&file:files){
             addItem(file.currFileName);
         }
     }
-    else
+    else{
         files.append(f);
+    }
+}
+
+void MyListWidget::Preview(const QModelIndex &index) {
+    currFilePos = index.row();
+//    QFileInfo info(files[currFilePos].currFilePathWithName);
+
+    const int W = 400;
+    const int H = 300;
+    auto picWidget = new QWidget;
+    picWidget->setGeometry(QCursor::pos().x(),QCursor::pos().y(),W,H);
+    auto picLabel = new QLabel(picWidget);
+    picLabel->setGeometry(0,0,W,H);
+    QImage img(files[currFilePos].currFilePathWithName);
+    if(img.isNull()){
+        return ;
+    }
+
+    int picWidth = img.width();
+    int picHeight = img.height();
+    if(picWidth == picHeight)
+        picLabel->setPixmap(QPixmap::fromImage(img.scaled(picLabel->size())));
+    if(picWidth>picHeight){
+        float pW_W = picWidth/W;
+        picLabel->setPixmap(QPixmap::fromImage(img.scaled(W,picHeight/pW_W)));
+    }
+    if(picWidth<picHeight){
+        float pH_H = picHeight/H;
+        picLabel->setPixmap(QPixmap::fromImage(img.scaled(picWidth/pH_H,H)));
+    }
+
+    picWidget->show();
 }
 
